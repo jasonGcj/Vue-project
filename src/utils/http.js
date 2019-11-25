@@ -10,19 +10,13 @@ axios.defaults.baseURL =process.env.API_USER;
 //http request 拦截器
 axios.interceptors.request.use(
   config => {
-
-    let item = localStorage.getItem("token");
+    if(window.localStorage.getItem("token")){
+      config.headers.Authorization = window.localStorage.getItem('access-token');
+    }
     // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
     config.headers = {
       'Content-Type':'application/json',
-      'token':item
     }
-  /*  if(item == null || item == ''){
-      alert('请您重新登录')
-    }*/
-    // if(token){
-    //   config.params = {'token':token}
-    // }
     return config;
   },
   error => {
@@ -33,10 +27,11 @@ axios.interceptors.request.use(
 
 //http response 拦截器
 axios.interceptors.response.use(
+
   response => {
-    if(response.data.errCode ==200){
+    if(response.data.code !=200){
       router.push({
-        path:"/login",
+        path:"/user/login",
         querry:{redirect:router.currentRoute.fullPath}//从哪个页面跳转
       })
     }
