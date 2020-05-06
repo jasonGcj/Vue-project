@@ -44,7 +44,7 @@
     data () {
       return {
         content: '发送验证码',  // 按钮里显示的内容
-        totalTime: 10,      //记录具体倒计时时间
+        totalTime: 60,      //记录具体倒计时时间
         canClick: true,
         showLogin: true,
         showRegister: false,
@@ -148,7 +148,7 @@
             if (this.totalTime < 0) {
               window.clearInterval(clock)
               this.content = '重新发送验证码'
-              this.totalTime = 10
+              this.totalTime = 60
               this.canClick = true  //这里重新开启
             }
           },1000)
